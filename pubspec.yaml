@@ -12,6 +12,9 @@ dependencies:
 
   cupertino_icons: ^0.1.2
 
+  simple_auth:
+  simple_auth_flutter:
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
