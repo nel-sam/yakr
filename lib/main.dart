@@ -21,7 +21,7 @@ class _MyAppState extends State<MyApp> {
         '/widget': (_) => new WebviewScaffold(
               url: 'https://www.google.ba',
               appBar: new AppBar(
-                title: const Text("Ova ye Google"),
+                title: const Text("Ovo je Google"),
               ),
               withZoom: true,
               withLocalStorage: true,
