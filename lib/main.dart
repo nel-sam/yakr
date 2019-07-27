@@ -1,28 +1,28 @@
+import 'package:aad_oauth/aad_oauth.dart';
+import 'package:aad_oauth/model/config.dart';
 import 'package:flutter/material.dart';
-import 'package:simple_auth/simple_auth.dart' as simpleAuth;
-import 'package:simple_auth_flutter/simple_auth_flutter.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(new MyApp());
 
 class MyApp extends StatefulWidget {
   @override
-  _MyAppState createState() => _MyAppState();
+  _MyAppState createState() => new _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
   @override
   initState() {
     super.initState();
-    SimpleAuthFlutter.init(context);
   }
 
+  @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.green,
+    return new MaterialApp(
+      title: 'AAD OAuth Demo',
+      theme: new ThemeData(
+        primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: new MyHomePage(title: 'AAD OAuth Home'),
     );
   }
 }
@@ -32,54 +32,54 @@ class MyHomePage extends StatefulWidget {
   final String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _MyHomePageState createState() => new _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
   static String azureClientId = "d0fc0aa6-c341-464c-992f-64e571b9c17a";
   static String azureTenant = "29fa8797-b4ea-49ca-aa2b-443d88286ed1";
-  final simpleAuth.AzureADV2Api azureApi = new simpleAuth.AzureADV2Api(
-    "azure", //identifier
-    azureClientId, //clientId
-    "native", //clientSecret
-    "https://login.microsoftonline.com/$azureTenant/oauth2/token", //tokenUrl
-    "https://login.microsoftonline.com/$azureTenant/oauth2/authorize", //authUrl
-    "com.example.yakr://redirect"//"https://login.microsoftonline.com/common/oauth2/nativeclient" //redirectUrl
-  );
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+  static final Config config = new Config(
+    azureTenant,
+    azureClientId,
+    "openid profile offline_access",
+    "https://login.live.com/oauth20_desktop.srf",);
 
-  @override
+  final AadOAuth oauth = AadOAuth(config);
+
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
+    // adjust window size for browser login
+    var screenSize = MediaQuery.of(context).size;
+    var rectSize =  Rect.fromLTWH(0.0, 25.0, screenSize.width, screenSize.height - 25);
+    oauth.setWebViewScreenSize(rectSize);
+
+    return new Scaffold(
+      appBar: new AppBar(
+        title: new Text(widget.title),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
+      body: ListView(
+        children: <Widget>[
+          ListTile(
+            title: Text(
+              "AzureAD OAuth",
+              style: Theme.of(context).textTheme.headline,
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          login(azureApi);
-        },
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
+          ),
+          ListTile(
+            leading: Icon(Icons.launch),
+            title: Text('Login'),
+            onTap: () {
+              login();
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.delete),
+            title: Text('Logout'),
+            onTap: () {
+              logout();
+            },
+          ),
+        ],
       ),
     );
   }
@@ -99,17 +99,18 @@ class _MyHomePageState extends State<MyHomePage> {
     showDialog(context: context, builder: (BuildContext context) => alert);
   }
 
-  void login(simpleAuth.AzureADV2Api api) async {
+  void login() async {
     try {
-      var success = await api.authenticate();
-      showMessage("Logged in success: $success");
+      await oauth.login();
+      String accessToken = await oauth.getAccessToken();
+      showMessage("Logged in successfully, your access token: $accessToken");
     } catch (e) {
       showError(e);
     }
   }
 
-  void logout(simpleAuth.AzureADV2Api api) async {
-    await api.logOut();
+  void logout() async {
+    await oauth.logout();
     showMessage("Logged out");
   }
 }
