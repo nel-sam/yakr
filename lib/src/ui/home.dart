@@ -12,25 +12,21 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-          textTheme: TextTheme(title: TextStyle(color: Home.textColor)),
-          actions: [
-            Icon(Icons.person_add)
-            ],
-            iconTheme: IconThemeData(color: Home.textColor),
-            backgroundColor: Colors.white70,
-        ),
-        body: Container(),
-        bottomNavigationBar: BottomAppBar(
+      appBar: AppBar(
+        title: Text(widget.title),
+        textTheme: TextTheme(title: TextStyle(color: Home.textColor)),
+        actions: [Icon(Icons.person_add)],
+        iconTheme: IconThemeData(color: Home.textColor),
+        backgroundColor: Colors.white70,
+      ),
+      body: Container(),
+      bottomNavigationBar: BottomAppBar(
           child: Row(
-            children: [
-              Icon(Icons.room, color: Home.textColor),
-              Icon(Icons.people_outline)
-            ],
-          )
-        ),
-        );
-
+        children: [
+          Icon(Icons.room, color: Home.textColor),
+          Icon(Icons.people_outline)
+        ],
+      )),
+    );
   }
 }
