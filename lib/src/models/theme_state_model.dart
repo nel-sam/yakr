@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ThemeStateModel {
-  ThemeData selectedTheme;
+  String selectedThemeKey;
 
   Map<String, ThemeData> availableThemes = {
     "NorwayNights": ThemeData(

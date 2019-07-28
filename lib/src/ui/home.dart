@@ -24,7 +24,7 @@ class _HomeState extends State<Home> {
       builder: (context, state) {
         return MaterialApp(
           navigatorKey: Home.navKey,
-          theme: state.themeState.selectedTheme ??
+          theme: state.themeState.availableThemes[state.themeState.selectedThemeKey] ??
               state.themeState.availableThemes["NorwayNights"],
           title: widget.appTitle,
           home: Scaffold(

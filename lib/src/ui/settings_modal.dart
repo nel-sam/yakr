@@ -20,11 +20,14 @@ class _SettingsModalState extends State<SettingsModal> {
     super.initState();
     _themeBloc = BlocProvider.of<ThemeBloc>(context);
     themeButtons = _themeBloc.currentState.themeState.availableThemes
-                    .map((t) => RaisedButton(
+                    .map((t) {
+                      return RaisedButton(
                       onPressed: () => _themeBloc.setTheme(t),
                       color: _themeBloc.currentState.themeState.availableThemes[t].accentColor,
-                      child: _themeBloc.currentState.themeState.selectedTheme
-                    ));
+                      child: _themeBloc.currentState.themeState.selectedThemeKey == t 
+                              ? Icon(Icons.check, color: Colors.white)
+              : Container()); }
+                            );
   }
   
   @override
