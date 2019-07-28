@@ -1,20 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:yakr/src/blocs/theme_bloc.dart';
 import 'package:yakr/src/ui/home.dart';
 
 void main() {
-  runApp(App());
-}
-
-class App extends StatelessWidget {
-  final appTitle = 'Yakr';
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: appTitle,
-      home: Home(
-        title: appTitle,
+  runApp(MultiBlocProvider(    
+    providers: [
+      BlocProvider<ThemeBloc>(
+        builder: (context) => ThemeBloc(),
       ),
-    );
-  }
+    ],
+    child: Home(),
+  ));
 }
