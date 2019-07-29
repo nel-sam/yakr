@@ -14,7 +14,7 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
   Stream<ThemeState> mapEventToState(ThemeEvent event) async* {
     switch(event.runtimeType) {
       case SetThemeEvent:
-        yield currentState..themeState.selectedThemeKey = event.themeKey;
+        yield currentState..selectedThemeKey = event.themeKey;
         break;
       default: 
         break;

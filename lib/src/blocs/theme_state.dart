@@ -1,11 +1,11 @@
-import 'package:yakr/src/models/theme_state_model.dart';
+import 'package:yakr/src/ui/yakr_themes.dart';
 
-class ThemeState {  
-  ThemeStateModel themeState;
+class ThemeState {
+  String selectedThemeKey;
 
   ThemeState._();
 
   factory ThemeState.initial() {
-    return ThemeState._()..themeState = ThemeStateModel();
+    return ThemeState._()..selectedThemeKey = YakrThemes.defaultTheme;
   }
 }

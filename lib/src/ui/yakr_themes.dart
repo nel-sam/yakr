@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
-class ThemeStateModel {
-  String selectedThemeKey;
-
-  Map<String, ThemeData> availableThemes = {
+class YakrThemes {
+  static String defaultTheme = "NorwayNights";
+  static Map<String, ThemeData> availableThemes = {
     "NorwayNights": ThemeData(
         primarySwatch: Colors.blue,
         accentColor: Colors.blueAccent,
