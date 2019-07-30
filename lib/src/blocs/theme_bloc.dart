@@ -3,10 +3,10 @@ import 'package:yakr/src/blocs/theme_event.dart';
 import 'package:yakr/src/blocs/theme_state.dart';
 
 class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
-   setTheme(String themeKey) {
+   changeTheme(String themeKey) {
     dispatch(SetThemeEvent(themeKey));
   }
- 
+
   @override
   get initialState => ThemeState.initial();
 
@@ -14,9 +14,9 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
   Stream<ThemeState> mapEventToState(ThemeEvent event) async* {
     switch(event.runtimeType) {
       case SetThemeEvent:
-        yield currentState..selectedThemeKey = event.themeKey;
+        yield ThemeSetEvent(event.themeKey);
         break;
-      default: 
+      default:
         break;
     }
   }

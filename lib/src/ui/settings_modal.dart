@@ -30,10 +30,8 @@ class _SettingsModalState extends State<SettingsModal> {
       themeButtons.add(
         RaisedButton(
             onPressed: () {
-              setState(() {
-                _themeBloc.setTheme(key);
+                _themeBloc.changeTheme(key);
                 _loadThemes();
-              });
             },
             color: value.accentColor,
             child: _themeBloc.currentState.selectedThemeKey == key
@@ -46,7 +44,7 @@ class _SettingsModalState extends State<SettingsModal> {
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton(
-      itemBuilder: (context) => [        
+      itemBuilder: (context) => [
         // PopupMenuItem(
         //   child:
         //    Column(children: [
@@ -58,7 +56,7 @@ class _SettingsModalState extends State<SettingsModal> {
         //   ),
         // ),
         PopupMenuItem(
-          child: 
+          child:
           Column(children: [
             Row(children: [
               Text("Theme"),

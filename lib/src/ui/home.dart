@@ -38,12 +38,10 @@ class _HomeState extends State<Home> {
                 IconButton(
                   icon: Icon(Icons.collections),
                   onPressed: () {
-                    setState(() {
                       if (state.selectedThemeKey == YakrThemes.defaultTheme)
-                        _themeBloc.setTheme("DowntownOslo");
+                        _themeBloc.changeTheme("DowntownOslo");
                       else
-                        _themeBloc.setTheme(YakrThemes.defaultTheme);
-                   });
+                        _themeBloc.changeTheme(YakrThemes.defaultTheme);
                   },
                 )
               ],
