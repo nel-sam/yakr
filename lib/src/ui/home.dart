@@ -14,56 +14,50 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  ThemeBloc _themeBloc;
-
-  @override
-  initState() {
-    super.initState();
-    _themeBloc = BlocProvider.of<ThemeBloc>(context);
-  }
-
   Widget build(BuildContext context) {
-    return BlocBuilder<ThemeBloc, ThemeState>(
-      builder: (context, state) {
-        return MaterialApp(
-          navigatorKey: Home.navKey,
-          theme: YakrThemes.availableThemes[state.selectedThemeKey] ??
-              YakrThemes.availableThemes[YakrThemes.defaultTheme],
-          title: widget.appTitle,
-          home: Scaffold(
-            appBar: AppBar(
-              title: Text(widget.appTitle),
-              //textTheme: TextTheme(title: TextStyle(color: Home.textColor)),
-              actions: [
-                IconButton(
-                  icon: Icon(Icons.collections),
-                  onPressed: () {
-                    setState(() {
+    return MaterialApp(
+      navigatorKey: Home.navKey,
+      // theme: YakrThemes.availableThemes[state.selectedThemeKey] ??
+      //     YakrThemes.availableThemes[YakrThemes.defaultTheme],
+      title: widget.appTitle,
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text(widget.appTitle),
+          //textTheme: TextTheme(title: TextStyle(color: Home.textColor)),
+          //iconTheme: IconThemeData(color: Home.textColor),
+          //backgroundColor: Colors.white70,
+        ),
+        body: BlocProvider(
+          builder: (context) => ThemeBloc(),
+          child: BlocBuilder<ThemeBloc, ThemeState>(
+              builder: (BuildContext context, ThemeState state) {
+            return Container(
+                child: Column(
+              children: <Widget>[
+                Text(state.selectedThemeKey),
+                RaisedButton(
+                    child: Text("Theme"),
+                    onPressed: () {
+                      final bloc = BlocProvider.of<ThemeBloc>(context);
+                      //setState(() {
                       if (state.selectedThemeKey == YakrThemes.defaultTheme)
-                        _themeBloc.setTheme("DowntownOslo");
+                        bloc.setTheme("DowntownOslo");
                       else
-                        _themeBloc.setTheme(YakrThemes.defaultTheme);
-                   });
-                  },
-                )
+                        bloc.setTheme(YakrThemes.defaultTheme);
+                      //});
+                    })
               ],
-              //iconTheme: IconThemeData(color: Home.textColor),
-              //backgroundColor: Colors.white70,
-            ),
-            body: Container(
-              child: Text(state.selectedThemeKey),
-            ),
-            bottomNavigationBar: BottomAppBar(
-              child: Row(
-                children: [
-                  Icon(Icons.room, color: Home.textColor),
-                  Icon(Icons.people_outline)
-                ],
-              ),
-            ),
+            ));
+          }),
+        ),
+        bottomNavigationBar: BottomAppBar(
+          child: Row(
+            children: [
+              Icon(Icons.room, color: Home.textColor),
+            ],
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 }

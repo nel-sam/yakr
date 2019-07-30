@@ -6,17 +6,17 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
    setTheme(String themeKey) {
     dispatch(SetThemeEvent(themeKey));
   }
- 
+
   @override
-  get initialState => ThemeState.initial();
+  ThemeState get initialState => ThemeState.initial();
 
   @override
   Stream<ThemeState> mapEventToState(ThemeEvent event) async* {
     switch(event.runtimeType) {
       case SetThemeEvent:
-        yield currentState..selectedThemeKey = event.themeKey;
+        yield ThemeChanged(event.themeKey);
         break;
-      default: 
+      default:
         break;
     }
   }

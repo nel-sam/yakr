@@ -1,5 +1,9 @@
-abstract class ThemeEvent {
-  String themeKey;
+import 'package:equatable/equatable.dart';
+import 'package:meta/meta.dart';
+
+@immutable
+abstract class ThemeEvent  extends Equatable {
+  final String themeKey;
   ThemeEvent(this.themeKey);
 }
 
