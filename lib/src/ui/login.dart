@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:yakr/src/blocs/theme_bloc.dart';
+import 'package:yakr/src/blocs/blocs.dart';
 import 'package:yakr/src/providers/auth_provider.dart';
 
 class LoginPage extends StatefulWidget {
@@ -9,12 +8,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  ThemeBloc _themeBloc;
-
   @override
   initState() {
     super.initState();
-    _themeBloc = BlocProvider.of<ThemeBloc>(context);
   }
 
   @override
@@ -24,7 +20,8 @@ class _LoginPageState extends State<LoginPage> {
       child: RaisedButton(
         child: Text('Login'),
         onPressed: () {
-          AuthProvider().login();
+          AuthProvider().login().then((a) =>
+                  Navigator.of(context).pushNamed('/home'));//.catchError();
         },
       ),
     ));

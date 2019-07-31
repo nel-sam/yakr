@@ -19,11 +19,13 @@ class AuthProvider {
 
   final AadOAuth oauth = AadOAuth(config);
 
-  void login() async {
+  Future<String> login() async {
     try {
       await oauth.login();
-      String accessToken = await oauth.getAccessToken();
-    } catch (e) {}
+      return await oauth.getAccessToken();
+    } catch (e) {
+
+    }
   }
 
   void logout() async {

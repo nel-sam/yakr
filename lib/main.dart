@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:yakr/src/blocs/theme_bloc.dart';
+import 'package:yakr/src/blocs/blocs.dart';
 
 import 'app.dart';
 
