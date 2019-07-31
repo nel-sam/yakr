@@ -1,9 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:yakr/src/blocs/theme_event.dart';
 import 'package:yakr/src/blocs/theme_state.dart';
+import 'package:yakr/src/ui/yakr_themes.dart';
 
 class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
-   changeTheme(String themeKey) {
+   changeTheme(ThemeKeys themeKey) {
     dispatch(SetThemeEvent(themeKey));
   }
 

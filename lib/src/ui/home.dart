@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yakr/src/blocs/theme_bloc.dart';
 import 'package:yakr/src/blocs/theme_state.dart';
+import 'package:yakr/src/providers/route_generator.dart';
+import 'package:yakr/src/ui/login.dart';
 import 'package:yakr/src/ui/yakr_themes.dart';
 
 class Home extends StatefulWidget {
   static final textColor = Colors.grey[800];
-  final appTitle = 'Yakr';
-  static final navKey = new GlobalKey<NavigatorState>();
 
   @override
   _HomeState createState() => new _HomeState();
@@ -23,45 +23,33 @@ class _HomeState extends State<Home> {
   }
 
   Widget build(BuildContext context) {
-    return BlocBuilder<ThemeBloc, ThemeState>(
-      builder: (context, state) {
-        return MaterialApp(
-          navigatorKey: Home.navKey,
-          theme: YakrThemes.availableThemes[state.selectedThemeKey] ??
-              YakrThemes.availableThemes[YakrThemes.defaultTheme],
-          title: widget.appTitle,
-          home: Scaffold(
-            appBar: AppBar(
-              title: Text(widget.appTitle),
-              //textTheme: TextTheme(title: TextStyle(color: Home.textColor)),
-              actions: [
-                IconButton(
-                  icon: Icon(Icons.collections),
-                  onPressed: () {
-                      if (state.selectedThemeKey == YakrThemes.defaultTheme)
-                        _themeBloc.changeTheme("DowntownOslo");
-                      else
-                        _themeBloc.changeTheme(YakrThemes.defaultTheme);
-                  },
-                )
-              ],
-              //iconTheme: IconThemeData(color: Home.textColor),
-              //backgroundColor: Colors.white70,
-            ),
-            body: Container(
-              child: Text(state.selectedThemeKey),
-            ),
-            bottomNavigationBar: BottomAppBar(
-              child: Row(
-                children: [
-                  Icon(Icons.room, color: Home.textColor),
-                  Icon(Icons.people_outline)
-                ],
-              ),
-            ),
-          ),
-        );
-      },
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Yakr'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.collections),
+            onPressed: () {
+              if (_themeBloc.currentState.selectedThemeKey ==
+                  YakrThemes.defaultTheme) {
+                _themeBloc.changeTheme(ThemeKeys.downtownOslo);
+              } else
+                _themeBloc.changeTheme(YakrThemes.defaultTheme);
+            },
+          )
+        ],
+      ),
+      body: Center(
+        child: Text('Home page', style: TextStyle(fontSize: 80)),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        child: Row(
+          children: [
+            Icon(Icons.room, color: Home.textColor),
+            Icon(Icons.people_outline)
+          ],
+        ),
+      ),
     );
   }
 }

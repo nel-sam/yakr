@@ -1,8 +1,10 @@
+import 'package:yakr/src/ui/yakr_themes.dart';
+
 abstract class ThemeEvent {
-  String themeKey;
+  ThemeKeys themeKey;
   ThemeEvent(this.themeKey);
 }
 
 class SetThemeEvent extends ThemeEvent {
-  SetThemeEvent(String themeKey): super(themeKey);
+  SetThemeEvent(ThemeKeys themeKey): super(themeKey);
 }

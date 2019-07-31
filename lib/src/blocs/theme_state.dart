@@ -1,7 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:yakr/src/ui/yakr_themes.dart';
 
+@immutable
 class ThemeState {
-  String selectedThemeKey;
+  ThemeKeys selectedThemeKey;
 
   ThemeState._();
   ThemeState([List props = const []]);
@@ -12,7 +14,7 @@ class ThemeState {
 }
 
 class ThemeSetEvent extends ThemeState {
-    final String selectedThemeKey;
+    final ThemeKeys selectedThemeKey;
 
     ThemeSetEvent(this.selectedThemeKey): super([selectedThemeKey]);
 }
