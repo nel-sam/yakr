@@ -28,7 +28,7 @@ class AuthProvider {
     }
   }
 
-  void logout() async {
-    await oauth.logout();
+  Future<void> logout() async {
+    return await oauth.logout();
   }
 }

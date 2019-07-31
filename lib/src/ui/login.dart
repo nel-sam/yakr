@@ -8,6 +8,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final authProvider = AuthProvider();
+
   @override
   initState() {
     super.initState();
@@ -20,8 +22,8 @@ class _LoginPageState extends State<LoginPage> {
       child: RaisedButton(
         child: Text('Login'),
         onPressed: () {
-          AuthProvider().login().then((a) =>
-                  Navigator.of(context).pushNamed('/home'));//.catchError();
+          authProvider.login().then(
+              (a) => Navigator.of(context).pushNamed('/home')); //.catchError();
         },
       ),
     ));

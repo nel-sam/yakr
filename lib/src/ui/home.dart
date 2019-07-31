@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yakr/src/blocs/blocs.dart';
+import 'package:yakr/src/providers/auth_provider.dart';
 import 'package:yakr/src/ui/yakr_themes.dart';
 
 class Home extends StatefulWidget {
@@ -12,6 +13,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   ThemeBloc _themeBloc;
+  final authProvider = AuthProvider();
 
   @override
   initState() {
@@ -36,8 +38,17 @@ class _HomeState extends State<Home> {
           )
         ],
       ),
-      body: Center(
-        child: Text('Home page', style: TextStyle(fontSize: 80)),
+      body: Column(
+        children: [
+          Text('Home page', style: TextStyle(fontSize: 80)),
+          RaisedButton(
+            child: Text('Logout'),
+            onPressed: () {
+              authProvider.logout().then(
+                  (a) => Navigator.of(context).pushNamed('/')); //.catchError();
+            },
+          )
+        ],
       ),
       bottomNavigationBar: BottomAppBar(
         child: Row(
