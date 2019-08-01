@@ -4,6 +4,10 @@ import 'package:yakr/src/blocs/blocs.dart';
 import 'package:yakr/src/providers/auth_provider.dart';
 import 'package:yakr/src/ui/yakr_themes.dart';
 
+import 'bottom_nav/fab_bottom_app_bar.dart';
+import 'bottom_nav/fab_with_icons.dart';
+import 'bottom_nav/layout.dart';
+
 class Home extends StatefulWidget {
   static final textColor = Colors.grey[800];
 
@@ -50,13 +54,39 @@ class _HomeState extends State<Home> {
           )
         ],
       ),
-      bottomNavigationBar: BottomAppBar(
-        child: Row(
-          children: [
-            Icon(Icons.room, color: Home.textColor),
-            Icon(Icons.people_outline)
-          ],
-        ),
+      bottomNavigationBar: FABBottomAppBar(
+        color: Colors.grey,
+        selectedColor: Colors.red,
+        notchedShape: CircularNotchedRectangle(),
+        //onTabSelected: _selectedTab,
+        items: [
+          FABBottomAppBarItem(iconData: Icons.chat, text: 'Messages'),
+          FABBottomAppBarItem(iconData: Icons.web, text: 'Rooms'),
+        ],
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: _buildFab(context),
+    );
+  }
+
+  Widget _buildFab(BuildContext context) {
+    final icons = [Icons.sms, Icons.mail, Icons.phone];
+    return AnchoredOverlay(
+      showOverlay: true,
+      overlayBuilder: (context, offset) {
+        return CenterAbout(
+          //position: Offset(offset.dx, offset.dy - icons.length * 35.0),
+          child: FabWithIcons(
+            icons: icons,
+            //onIconTapped: _selectedFab,
+          ),
+        );
+      },
+      child: FloatingActionButton(
+        onPressed: () {},
+        tooltip: 'Add',
+        child: Icon(Icons.add),
+        elevation: 2.0,
       ),
     );
   }
