@@ -18,12 +18,19 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Center(
-      child: RaisedButton(
-        child: Text('Login'),
-        onPressed: () {
-          authProvider.login().then(
-              (a) => Navigator.of(context).pushNamed('/home')); //.catchError();
-        },
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Image.asset('./assets/yakrlogo_clear.png'),
+          RaisedButton(
+
+            child: Padding(padding: EdgeInsets.all(10),child: Text('Login', style: TextStyle(fontSize: 40))),
+            onPressed: () {
+              authProvider.login().then(
+                  (a) => Navigator.of(context).pushNamed('/home')); //.catchError();
+            },
+          ),
+        ],
       ),
     ));
   }
