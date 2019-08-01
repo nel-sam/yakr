@@ -29,7 +29,7 @@ class FabWithIconsState extends State<FabWithIcons> with TickerProviderStateMixi
       children: List.generate(widget.icons.length, (int index) {
         return _buildChild(index);
       }).toList()..add(
-        _buildFab(),
+      _buildFab(),
       ),
     );
   }
@@ -69,9 +69,9 @@ class FabWithIconsState extends State<FabWithIcons> with TickerProviderStateMixi
           _controller.reverse();
         }
       },
-      tooltip: 'Increment',
+      tooltip: 'Add',
       child: Icon(Icons.add),
-      elevation: 2.0,
+      //elevation: 2.0,
     );
   }
 

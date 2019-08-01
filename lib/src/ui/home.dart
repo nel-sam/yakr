@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yakr/src/blocs/blocs.dart';
-import 'package:yakr/src/providers/auth_provider.dart';
+import 'package:yakr/src/ui/rooms.dart';
 import 'package:yakr/src/ui/yakr_themes.dart';
 
 import 'bottom_nav/fab_bottom_app_bar.dart';
 import 'bottom_nav/fab_with_icons.dart';
 import 'bottom_nav/layout.dart';
+import 'menu.dart';
+import 'messages.dart';
 
 class Home extends StatefulWidget {
   static final textColor = Colors.grey[800];
@@ -17,12 +19,13 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   ThemeBloc _themeBloc;
-  final authProvider = AuthProvider();
+  PageController _pageController;
 
   @override
   initState() {
     super.initState();
     _themeBloc = BlocProvider.of<ThemeBloc>(context);
+    _pageController = PageController();
   }
 
   Widget build(BuildContext context) {
@@ -42,23 +45,21 @@ class _HomeState extends State<Home> {
           )
         ],
       ),
-      body: Column(
-        children: [
-          Text('Home page', style: TextStyle(fontSize: 80)),
-          RaisedButton(
-            child: Text('Logout'),
-            onPressed: () {
-              authProvider.logout().then(
-                  (a) => Navigator.of(context).pushNamed('/')); //.catchError();
-            },
-          )
+      drawer: Menu(),
+      body: PageView(
+        controller: _pageController,
+        children: <Widget>[
+          Messages(),
+          Rooms()
         ],
-      ),
+      ) ,
       bottomNavigationBar: FABBottomAppBar(
         color: Colors.grey,
         selectedColor: Colors.red,
         notchedShape: CircularNotchedRectangle(),
-        //onTabSelected: _selectedTab,
+        onTabSelected: (int i) {
+          _pageController.animateToPage(i, duration: Duration(milliseconds: 320), curve: Curves.easeOut);
+        },
         items: [
           FABBottomAppBarItem(iconData: Icons.chat, text: 'Messages'),
           FABBottomAppBarItem(iconData: Icons.web, text: 'Rooms'),
@@ -70,15 +71,15 @@ class _HomeState extends State<Home> {
   }
 
   Widget _buildFab(BuildContext context) {
-    final icons = [Icons.sms, Icons.mail, Icons.phone];
+    final icons = [Icons.chat, Icons.web, Icons.insert_emoticon];
     return AnchoredOverlay(
       showOverlay: true,
       overlayBuilder: (context, offset) {
         return CenterAbout(
-          //position: Offset(offset.dx, offset.dy - icons.length * 35.0),
+          position: Offset(offset.dx, offset.dy - icons.length * 35.0),
           child: FabWithIcons(
             icons: icons,
-            //onIconTapped: _selectedFab,
+            //onIconTapped: (int i) {},
           ),
         );
       },
@@ -86,7 +87,7 @@ class _HomeState extends State<Home> {
         onPressed: () {},
         tooltip: 'Add',
         child: Icon(Icons.add),
-        elevation: 2.0,
+       // elevation: 2.0,
       ),
     );
   }
